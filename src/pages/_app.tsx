@@ -1,13 +1,17 @@
-import {useState} from 'react'
+import React, { useState } from 'react'
+import {CountdownProvider} from '../contexts/CountdownContext'
 import { ChallengeContext, ChallengesProvider } from '../contexts/ChallengesContext'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
-  
+
 
   return (
+
     <ChallengesProvider>
-      <Component {...pageProps} />
+      <CountdownProvider>
+        <Component {...pageProps} />
+      </CountdownProvider>
     </ChallengesProvider>
   )
 }
