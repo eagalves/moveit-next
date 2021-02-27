@@ -1,14 +1,19 @@
 import { createContext, useState, ReactNode, useEffect } from 'react'
 import challenges from '../../challenges.json'
+import Cookies from 'js-cookie'
+
+
 
 interface ChallengesProviderProps {
     children: ReactNode;
 }
+
 interface Challenge {
     type: 'body' | 'eye'
     description: string;
     amount: number;
 }
+
 interface ChallengesContextData {
     level: number;
     levelUp: () => void;
@@ -37,8 +42,11 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         Notification.requestPermission();
     }, []) // quando segundo parametro é uma array vazio [], esse componente é executado uma unica vez assim q chamado
 
-
-
+    useEffect(() => {
+        Cookies.set('level',String(level));
+        Cookies.set('currentExperience',String(currentExperience));
+        Cookies.set('challengedCompleted',String(challengedCompleted));
+    },[level,currentExperience,challengedCompleted]) //dispara uma função sempre que uma das váriaveis for modificada
     function levelUp() {
         setLevel(level + 1);
     }
